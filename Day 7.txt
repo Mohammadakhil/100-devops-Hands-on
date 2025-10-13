@@ -1,0 +1,11 @@
+# #Day7 - DevOps Learning Journey
+
+## ✅ What I Learned Today
+Generated SSH key pairs using `ssh-keygen` to enable secure, passwordless authentication and then copied the public key to a remote server using `ssh-copy-id <username>@<hostname>`, allowing the user to log in without entering a password each time. This setup is commonly used to automate server access and streamline DevOps workflows.
+
+Key Takeaways
+
+- `ssh-keygen` creates a public-private key pair for secure authentication. The private key stays on the local machine, while the public key is shared with remote servers.  
+- `ssh-copy-id <username>@<hostname>` installs the public key on the remote server’s `~/.ssh/authorized_keys` file, enabling passwordless SSH login.  
+- Using SSH keys instead of passwords improves security and allows automated scripts, deployments, and CI/CD pipelines to access servers without manual intervention.  
+- Passwordless SSH is a fundamental DevOps practice for secure and efficient server management.

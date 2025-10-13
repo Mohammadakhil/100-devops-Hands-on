@@ -1,0 +1,13 @@
+# #Day5 - DevOps Learning Journey
+
+## ✅ What I Learned Today
+Logged in to a remote server using `ssh user@hostname` and switched to the root user with `sudo -i`. Installed SELinux policies for enhanced Linux security using `sudo dnf install -y selinux-policy-doc`, checked the current SELinux configuration with `cat /etc/selinux/config`, and edited the configuration file using `vi /etc/selinux/config` to set `SELINUX=disabled`.
+
+Key Takeaways
+
+- `ssh username@hostname` allows secure remote server access.  
+- `sudo -i` provides full administrative privileges.  
+- SELinux (Security-Enhanced Linux) adds a layer of security by enforcing access control policies.  
+- `sudo dnf install -y selinux-policy-doc` installs documentation and policies for SELinux.  
+- Modifying `/etc/selinux/config` controls SELinux status (`enforcing`, `permissive`, `disabled`).  
+- Understanding and managing SELinux is important for securing Linux systems in DevOps environments.

@@ -1,0 +1,16 @@
+##Day 2 - DevOps Learning Journey
+
+## ✅ What I Learned Today
+1. Created a new Linux user with an expiry date:
+```bash
+sudo useradd -e 2024-02-17 john
+
+## Checked the current logged-in user:
+
+echo $USER
+
+Key Takeaways
+
+useradd -e YYYY-MM-DD username creates a new user and sets an expiry date. After this date, the user cannot log in. Useful for temporary accounts or managing access.
+echo $USER prints the username of the current logged-in user, helpful for verifying which account is active.
+Managing Linux users is essential in DevOps for server access control and permission management.

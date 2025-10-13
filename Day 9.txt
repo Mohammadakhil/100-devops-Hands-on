@@ -1,0 +1,12 @@
+# #Day9 - DevOps Learning Journey
+
+## ✅ What I Learned Today
+Verified the MariaDB installation and its data directory using `sudo ls -lah /var/lib/mysql`, fixed ownership of the database files with `sudo chown -R mysql:mysql /var/lib/mysql` to ensure the database user has proper permissions, then started the MariaDB service using `sudo systemctl start mariadb` and enabled it to start automatically on boot with `sudo systemctl enable mariadb`.
+
+Key Takeaways
+
+- `sudo ls -lah /var/lib/mysql` lists the contents of the MariaDB data directory with detailed information about permissions, ownership, and size.  
+- `sudo chown -R mysql:mysql /var/lib/mysql` ensures the `mysql` user and group own the database files, which is critical for MariaDB to function properly.  
+- `sudo systemctl start mariadb` starts the MariaDB service, and `sudo systemctl enable mariadb` configures it to automatically start at boot.  
+- Proper file ownership and service management are essential in DevOps for database reliability, security, and automated startup during server reboots.  
+- Understanding how to verify, fix permissions, and manage database services is a core skill for DevOps engineers working with application backends.

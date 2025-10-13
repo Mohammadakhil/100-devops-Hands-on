@@ -1,0 +1,27 @@
+# #Day3 - DevOps Learning Journey
+
+## ✅ What I Learned Today
+1. Logged in to a remote server via SSH:
+```bash
+ssh tony@hostname
+
+## Switched to the root user:
+sudo -i
+
+## Edited the SSH configuration file to secure root access:
+
+vi /etc/ssh/sshd_config
+
+## Restarted the SSH service and checked its status:
+
+systemctl restart sshd
+systemctl status sshd
+
+
+Key Takeaways
+
+ssh username@hostname allows secure remote login to servers. Essential for managing servers remotely.
+sudo -i switches to the root user with an interactive shell, giving full administrative access.
+vi /etc/ssh/sshd_config lets you modify SSH server settings. Securing SSH (e.g., disabling root login) is a critical security practice.
+systemctl restart sshd applies changes to SSH configuration, and systemctl status sshd verifies the service is running properly.
+Securing root SSH access is a fundamental step in server hardening and DevOps best practices.

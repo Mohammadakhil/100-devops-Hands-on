@@ -1,0 +1,12 @@
+# #Day4 - DevOps Learning Journey
+
+## ✅ What I Learned Today
+Logged in to a remote server using `ssh user@hostname`, switched to the root user with `sudo -i`, and modified script permissions using `chmod 755 filename.sh` to make it executable by the owner and readable/executable by others. Verified the permissions and file details with `ls -l`.
+
+Key Takeaways
+
+- `ssh username@hostname` enables secure remote server access.  
+- `sudo -i` provides full administrative privileges for managing system files and permissions.  
+- `chmod 755 filename.sh` sets execute permissions for the script, which is necessary to run scripts in Linux.  
+- `ls -l` displays detailed file information, including permissions, ownership, and file size.  
+- Proper permission management is essential in DevOps for security and smooth script execution.

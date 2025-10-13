@@ -1,0 +1,13 @@
+# #Day6 - DevOps Learning Journey
+
+## ✅ What I Learned Today
+Logged in to all KodeCloud app servers using `ssh user@hostname`, installed the cron service with `sudo yum install -y cronie`, started it using `sudo systemctl start crond`, enabled it to start on boot with `sudo systemctl enable crond`, and verified its status using `sudo systemctl status crond`. Added a cron job using `sudo crontab -e` and verified it with `sudo crontab -l`.
+
+Key Takeaways
+
+- `ssh username@hostname` is used for secure remote access to multiple servers.  
+- Cron is a time-based job scheduler in Linux used for automating tasks.  
+- `sudo yum install -y cronie` installs the cron service on RHEL/CentOS-based systems.  
+- `sudo systemctl start crond` starts the cron service, `enable` ensures it runs at boot, and `status` checks its health.  
+- `sudo crontab -e` edits cron jobs for the root user, while `sudo crontab -l` lists existing cron jobs.  
+- Automating tasks with cron is crucial in DevOps for routine maintenance, backups, and scheduled deployments.
