@@ -1,0 +1,23 @@
+# #Day11 - DevOps Learning Journey
+
+## ✅ What I Learned Today
+Deployed a **Java-based web application** using the **Apache Tomcat** server on App Server 2. Installed and configured Tomcat to run on a custom port (5001), then deployed a `ROOT.war` file to serve the application directly from the base URL.  
+
+Configured the Tomcat `server.xml` file to change the connector port, deployed the WAR file under `/usr/share/tomcat/webapps`, and verified the deployment using `curl` to confirm the web app’s response.
+
+### 🧠 Key Takeaways
+- `yum install -y tomcat` installs Tomcat and its dependencies using the system package manager.  
+- Configuration changes in `/usr/share/tomcat/conf/server.xml` (e.g., `<Connector port="5001" ...>`) control the port and network settings.  
+- Placing `ROOT.war` in `webapps` ensures the app loads directly at the root URL (no subdirectory).  
+- `systemctl start tomcat` and `systemctl status tomcat` are used to manage and verify the Tomcat service.  
+- Verifying deployment via `curl -i http://stapp02:5001` confirms a successful web response.  
+- Knowing how to deploy and configure Tomcat is essential for DevOps engineers managing Java-based microservices or monoliths.  
+
+### 💻 Commands Used
+```bash
+yum install -y tomcat
+vi /usr/share/tomcat/conf/server.xml   # changed Connector port to 5001
+cp /tmp/ROOT.war /usr/share/tomcat/webapps/
+systemctl start tomcat
+systemctl status tomcat
+curl -i http://stapp02:5001

@@ -1,0 +1,50 @@
+# #Day18 - DevOps Learning Journey 💻  
+
+## ✅ What I Learned Today  
+Today, I configured a **LAMP server** and restored a **WordPress database** on our new infrastructure in Stratos DC. I installed and enabled **Apache** and **PHP** with all required dependencies, configured Apache to listen on port **6200**, and verified the service was running.  
+
+On the database host, I installed **MariaDB**, created a new database `kodekloud_db10`, and restored it using a database dump from the jump host (`/home/thor/db.sql`). I created a new database user `kodekloud_sam` with full privileges on this database. Finally, I updated the WordPress configuration file (`wp-config.php`) on the NFS-mounted storage server to reflect the new database credentials, ensuring the website is fully functional on the new infrastructure.  
+
+---
+
+## 🧠 Key Takeaways  
+- LAMP stack installation and configuration is essential for hosting PHP-based applications like WordPress.  
+- Proper port configuration in Apache ensures web applications are accessible as expected.  
+- Creating users and granting privileges in MariaDB is crucial for secure database access.  
+- Restoring databases from dumps and updating application configuration files ensures seamless migration.  
+- Verifying services using `ss -luntp` or similar commands helps confirm proper setup and accessibility.  
+
+---
+
+## 💻 Commands Used
+```bash
+# Install Apache and PHP with dependencies
+sudo yum install httpd -y
+sudo systemctl start httpd
+sudo systemctl enable httpd
+sudo yum install epel-release -y
+sudo yum install http://rpms.remirepo.net/enterprise/remi-release-9.rpm -y
+sudo yum install php php-cli php-fpm php-mysqlnd php-gd php-mbstring php-xml php-intl -y
+sudo systemctl restart httpd
+sudo ss -luntp | grep httpd
+
+# MariaDB installation and setup
+sudo yum install mariadb-server -y
+sudo systemctl start mariadb
+sudo systemctl enable mariadb
+
+# Login to MariaDB
+sudo mysql -u root
+
+# Create database and user
+CREATE DATABASE kodekloud_db10;
+CREATE USER 'kodekloud_sam'@'localhost' IDENTIFIED BY 'YourPasswordHere';
+GRANT ALL PRIVILEGES ON kodekloud_db10.* TO 'kodekloud_sam'@'localhost';
+FLUSH PRIVILEGES;
+
+# Restore database from dump
+mysql -u kodekloud_sam -p kodekloud_db10 < /home/thor/db.sql
+
+# Update WordPress configuration file on NFS share
+sudo vi /var/www/html/wp-config.php
+# Update DB_NAME, DB_USER, DB_PASSWORD, DB_HOST

@@ -1,0 +1,57 @@
+# #Day20 - DevOps Learning Journey 🖥️
+
+## ✅ What I Learned Today
+Today, I prepared the infrastructure for a **new PHP-based application** on Nautilus infrastructure in Stratos DC. I installed **nginx** on App Server 2 and configured it to run on port **8094** with the document root set to `/var/www/html`.  
+
+I installed **PHP 8.1 (php-fpm)** and configured it to use a **unix socket** at `/var/run/php-fpm/default.sock`, creating necessary directories and setting correct ownership for proper nginx access. Then, I integrated **nginx with php-fpm** to serve PHP files efficiently. After configuring both services, I tested the application using `curl http://stapp02:8094/index.php` to ensure the website works correctly.  
+
+This task reinforced my understanding of deploying PHP applications with nginx and php-fpm, managing unix sockets, and configuring services to work together seamlessly.
+
+---
+
+## 🧠 Key Takeaways
+- **Nginx** is lightweight and can efficiently serve static and dynamic content when combined with **php-fpm**.  
+- PHP-FPM configuration with a **unix socket** improves performance and security.  
+- Correct **ownership and permissions** for the socket and document root are critical to ensure nginx can communicate with php-fpm.  
+- Service management (`systemctl restart/start/status`) is essential for changes to take effect.  
+- Testing using `curl` ensures that the application is accessible and running as expected.
+
+---
+
+## 💻 Commands Used
+```bash
+# Install nginx and start service
+sudo yum install nginx -y
+sudo systemctl start nginx
+sudo systemctl enable nginx
+sudo systemctl status nginx
+
+# Install PHP 8.1 and php-fpm
+sudo dnf module enable php:remi-8.1 -y
+sudo dnf module install php:remi-8.1 -y
+sudo yum install php php-fpm -y
+php -v
+
+# Configure PHP-FPM to use unix socket
+sudo mkdir -p /var/run/php-fpm
+sudo vi /etc/php-fpm.d/www.conf
+# Set listen = /var/run/php-fpm/default.sock
+
+# Set proper ownership for socket
+sudo chown -R nginx:nginx /var/run/php-fpm/default.sock
+
+# Configure nginx to work with php-fpm
+sudo vi /etc/nginx/nginx.conf
+# Add server block with root /var/www/html and fastcgi_pass unix:/var/run/php-fpm/default.sock
+
+# Restart services
+sudo systemctl restart php-fpm
+sudo systemctl restart nginx
+
+# Verify services
+sudo systemctl status nginx
+sudo systemctl status php-fpm
+ls -l /var/run/php-fpm/default.sock
+
+# Test PHP application
+curl http://stapp02:8094/index.php

@@ -1,0 +1,42 @@
+# #Day17 - DevOps Learning Journey 🐘  
+
+## ✅ What I Learned Today  
+Today, I set up a **PostgreSQL database server** as a pre-requisite for deploying a new application on Nautilus infrastructure. I installed PostgreSQL, created a database user `kodekloud_top` with a secure password, and created a database `kodekloud_db7`. I granted full privileges on this database to the newly created user.  
+
+To ensure local clients could connect securely, I configured PostgreSQL to allow local socket connections using the **md5 authentication method**. Finally, I tested the connection using the new credentials to verify that everything worked as expected. This task reinforced my understanding of database setup, user management, and secure authentication in a production-ready environment.  
+
+---
+
+## 🧠 Key Takeaways  
+- PostgreSQL installation and configuration is essential for application data storage.  
+- Creating users and assigning privileges ensures proper access control.  
+- Configuring `pg_hba.conf` for local connections with md5 authentication secures database access.  
+- Testing database connectivity after configuration validates that the setup is functional.  
+- Managing databases is a crucial skill for DevOps engineers supporting application deployment.  
+
+---
+
+## 💻 Commands Used
+```sql
+-- Login as postgres user
+sudo -i -u postgres psql
+
+-- Create a new database user with password
+CREATE USER kodekloud_top WITH PASSWORD 'TmPcZjtRQx';
+
+-- Create a new database
+CREATE DATABASE kodekloud_db7;
+
+-- Grant all privileges on database to the user
+GRANT ALL PRIVILEGES ON DATABASE kodekloud_db7 TO kodekloud_top;
+
+-- Edit pg_hba.conf to allow local connections using md5
+sudo vi /var/lib/pgsql/data/pg_hba.conf
+# Add line for local connection:
+local   kodekloud_db7    kodekloud_top     md5
+
+-- Reload PostgreSQL to apply changes
+sudo systemctl restart postgresql
+
+-- Test connection
+psql -U kodekloud_top -d kodekloud_db7 -h localhost -W

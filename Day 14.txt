@@ -1,0 +1,29 @@
+# #Day14 - DevOps Learning Journey 🛠️  
+
+## ✅ What I Learned Today  
+Today’s task focused on **ensuring high availability of Apache services** across all app servers. A monitoring alert reported that the Apache service was down on one of the hosts, so I had to identify the faulty server, install Apache if missing, and make sure it was running on port **8087** on all app servers.  
+
+I checked the service status using `systemctl status httpd`, installed Apache where necessary (`yum install httpd -y`), started and enabled the service to run on boot, and verified the listening ports with `netstat -tulnp`. I also updated the `httpd.conf` file to ensure the correct port configuration and confirmed availability with `curl http://localhost:8087`. By the end, Apache was up and running on all hosts, ensuring the system remained monitored and operational.  
+
+---
+
+## 🧠 Key Takeaways  
+- Monitoring alerts help quickly identify service outages across servers.  
+- `systemctl status/start/enable` are essential commands for managing services.  
+- Configuring the correct port in `/etc/httpd/conf/httpd.conf` ensures services are accessible as expected.  
+- `netstat -tulnp | grep httpd` helps verify which port Apache is listening on.  
+- Ensuring services run consistently across all servers is critical for reliability in production environments.  
+
+---
+
+## 💻 Commands Used
+```bash
+sudo systemctl status httpd
+sudo yum install httpd -y
+sudo systemctl start httpd
+sudo systemctl enable httpd
+sudo netstat -tulnp | grep httpd
+sudo vi /etc/httpd/conf/httpd.conf  # Set Listen 8087
+sudo systemctl restart httpd
+sudo netstat -tulnp | grep 8087
+curl http://localhost:8087

@@ -1,0 +1,51 @@
+# #Day16 - DevOps Learning Journey ⚡  
+
+## ✅ What I Learned Today  
+Today, I set up **HAProxy as a load balancer** for our application servers, ensuring traffic is evenly distributed across all app hosts. I installed and configured HAProxy on the **LBR server** using `yum`, added all app servers to the HAProxy configuration, and made sure it serves traffic on the default HTTP port (80).  
+
+Additionally, I installed **Nginx** on the LBR server to act as a reverse proxy, verified connectivity to all app servers using `ss -luntp | grep httpd`, and configured upstream blocks in `nginx.conf` pointing to each app server. Finally, I ensured that Nginx and HAProxy were running properly and verified that all backend servers were reachable, completing the load balancer setup.  
+
+---
+
+## 🧠 Key Takeaways  
+- **HAProxy** is essential for distributing traffic and improving reliability of web applications.  
+- **Nginx** can act as a reverse proxy in front of app servers for additional flexibility.  
+- Always verify backend connectivity using `ss -luntp` or similar commands.  
+- Proper upstream configuration ensures smooth load balancing and prevents downtime.  
+- Testing and confirming that all servers are running is critical for production-ready deployments.  
+
+---
+
+## 💻 Commands Used
+```bash
+ssh <LBR-server>
+sudo yum install haproxy -y
+sudo systemctl start haproxy
+sudo systemctl enable haproxy
+sudo systemctl status haproxy
+
+sudo yum install nginx -y
+sudo systemctl start nginx
+sudo systemctl enable nginx
+sudo systemctl status nginx
+
+# Verify backend app servers
+sudo ss -luntp | grep httpd
+
+# Configure Nginx upstream
+sudo vi /etc/nginx/nginx.conf
+# Example upstream block:
+upstream appservers {
+    server 172.16.238.11:80;
+    server 172.16.238.12:80;
+    server 172.16.238.13:80;
+}
+server {
+    listen 80;
+    location / {
+        proxy_pass http://appservers;
+    }
+}
+
+sudo systemctl reload nginx
+# Ensure all app servers are running and reachable

@@ -1,0 +1,31 @@
+# #Day13 - DevOps Learning Journey 🔒  
+
+## ✅ What I Learned Today  
+Today, I worked on **securing Apache servers** by implementing firewall rules using `iptables`. Our security team highlighted that Apache’s port 8081 was open to everyone, so I needed to restrict access while allowing the Load Balancer host.  
+
+I installed `iptables` and its dependencies, enabled the service to start on boot, and created rules to allow only the LBR host access to the application port. Additionally, I ensured SSH access remained open and loopback traffic was accepted, while all other traffic to port 8081 was blocked. Finally, I verified the rules using `iptables -L -n --line-numbers`.  
+
+---
+
+## 🧠 Key Takeaways  
+- `iptables` is a powerful tool for securing Linux hosts at the network level.  
+- Always flush existing rules (`iptables -F`) before adding new rules to avoid conflicts.  
+- Loopback (`lo`) and SSH access should always be allowed to maintain server functionality.  
+- Using `-s <IP>` and `--dport` allows selective access control for critical services.  
+- Enabling `iptables` to start on boot ensures firewall rules persist after a reboot — crucial for production security.  
+- Small security configurations like this drastically reduce exposure to potential attacks.  
+
+---
+
+## 💻 Commands Used
+```bash
+sudo yum install -y iptables iptables-services
+sudo systemctl enable --now iptables
+sudo systemctl status iptables
+sudo iptables -F
+sudo iptables -A INPUT -i lo -j ACCEPT
+sudo iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+sudo iptables -A INPUT -p tcp -s 172.16.238.14 --dport 8081 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 8081 -j DROP
+sudo iptables -L -n --line-numbers

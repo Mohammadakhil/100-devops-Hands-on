@@ -1,0 +1,33 @@
+# #Day12 - DevOps Learning Journey ⚙️  
+
+## ✅ What I Solved Today  
+Today’s task was all about **troubleshooting** — one of the most valuable real-world DevOps skills.  
+The Apache service on one of our app servers wasn’t reachable on port **5003**, so I had to dig in to find out why.  
+This kind of issue can arise from multiple sources — service downtime, port conflicts, or firewall misconfigurations — so systematic debugging was key.  
+
+---
+
+## 🧠 Step-by-Step Troubleshooting  
+
+1. **Identify the faulty server**  
+   Started by using `telnet` from the Jump Server to test connectivity across app servers and found **stapp01** was unreachable.  
+
+2. **Access and elevate privileges**  
+   ```bash
+   ssh tony@stapp01
+   sudo su -
+#Check the Apache service status
+
+systemctl status httpd
+systemctl start httpd
+
+#Checked the detailed status again to identify the reason for failure:
+systemctl status httpd
+
+#Resolve port conflict
+Killed the conflicting process using its PID, freeing up port 5003.
+
+#Restart and validate Apache
+
+systemctl restart httpd
+curl -I http://localhost:5003

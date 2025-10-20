@@ -1,0 +1,14 @@
+# 100-devops Day 1: Create a Linux User with a Non-Interactive Shell
+
+The System Admin Team at xFusionCorp Industries needs a non-interactive user on all app servers to support a backup agent tool. A non-interactive shell prevents login but allows running system tasks or scripts.
+
+On Linux, you can use the `useradd` command with the `-s` option to specify a non-interactive shell. There are two common options:
+
+- `/sbin/nologin` – explicitly prevents login and outputs a message saying login is not allowed.
+- `/bin/false` – prevents login silently without any message.
+
+### Command Example
+```bash
+sudo useradd -m -s /sbin/nologin tony       # App 1 user
+sudo useradd -m -s /sbin/nologin steve      # App 2 user
+sudo useradd -m -s /sbin/nologin banner     # App 3 user

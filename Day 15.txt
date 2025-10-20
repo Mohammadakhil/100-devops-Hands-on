@@ -1,0 +1,33 @@
+# #Day15 - DevOps Learning Journey 🌐  
+
+## ✅ What I Learned Today  
+Today, I prepared **App Server 3** for deploying a new application by installing and configuring **Nginx** with **SSL**. The server already had a self-signed certificate (`nautilus.crt`) and key (`nautilus.key`) at `/tmp`, which I moved to `/etc/nginx/SSL` and set proper permissions to secure the key.  
+
+I configured Nginx to use these SSL files, created a simple `index.html` under the Nginx document root with content `Welcome!`, and verified the configuration using `nginx -t`. Finally, I started, enabled, and reloaded Nginx to apply the changes and tested the HTTPS endpoint from the Jump host using `curl -Ik https://<app-server-ip>/`.  
+
+---
+
+## 🧠 Key Takeaways  
+- Installing and enabling Nginx with `yum` and `systemctl` is straightforward and ensures the server is ready for web applications.  
+- Properly moving and securing SSL certificates is critical for encrypted communication.  
+- A simple `index.html` is enough to verify the web server is running correctly before deploying complex apps.  
+- Testing endpoints using `curl -Ik` allows quick verification of HTTPS availability and SSL configuration.  
+- Configuring SSL and basic content in Nginx is a foundational skill for secure web deployments.  
+
+---
+
+## 💻 Commands Used
+```bash
+sudo yum install nginx -y
+sudo systemctl start nginx
+sudo systemctl enable nginx
+sudo systemctl status nginx
+sudo mkdir -p /etc/nginx/SSL
+sudo mv /tmp/nautilus.crt /etc/nginx/SSL
+sudo mv /tmp/nautilus.key /etc/nginx/SSL
+sudo chmod 600 /etc/nginx/SSL/nautilus.key
+sudo vi /etc/nginx/conf.d/default.conf   # Configure SSL
+echo "Welcome!" | sudo tee /usr/share/nginx/html/index.html
+sudo nginx -t
+sudo systemctl reload nginx
+curl -Ik https://<app-server-ip>/

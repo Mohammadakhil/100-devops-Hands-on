@@ -1,0 +1,71 @@
+# #Day19 - DevOps Learning Journey 🌐  
+
+## ✅ What I Learned Today  
+Today, I prepared our infrastructure to host **two static websites** on xFusionCorp’s Stratos Datacenter. I installed **Apache (httpd)** and its dependencies on all app hosts and configured it to serve on port **8083**. I created separate document roots for the two websites (`/var/www/media` and `/var/www/apps`) with proper ownership and permissions.  
+
+I set up **VirtualHosts** so that the `news` website would be accessible at `/ecommerce/` and the `cluster` website at `/cluster/`. After copying the website backups from the jump host, I restarted Apache and verified that both sites were accessible. This task reinforced my understanding of hosting multiple websites on a single server, managing VirtualHosts, and ensuring proper permissions for web directories.  
+
+---
+
+## 🧠 Key Takeaways  
+- Installing and configuring Apache with a custom port allows multiple applications to coexist on the same server.  
+- Document root directories must have correct ownership (`apache:apache`) and permissions for proper website access.  
+- VirtualHosts help in serving multiple websites from the same server.  
+- Copying website content from a remote host ensures migration or deployment readiness.  
+- Testing using `curl` verifies that web services are running and accessible as expected.  
+
+---
+
+## 💻 Commands Used
+```bash
+# Install Apache and start service
+sudo dnf install httpd -y
+sudo systemctl start httpd
+sudo systemctl enable httpd
+sudo systemctl status httpd
+
+# Configure Apache to listen on custom port
+sudo sed -i 's/^Listen .*/Listen 8083/' /etc/httpd/conf/httpd.conf
+
+# Create document root directories
+sudo mkdir -p /var/www/media
+sudo mkdir -p /var/www/apps
+
+# Set ownership and permissions
+sudo chown -R apache:apache /var/www/media /var/www/apps
+sudo chmod -R 755 /var/www/media /var/www/apps
+
+# Create VirtualHost configuration for media
+sudo tee /etc/httpd/conf.d/media.conf > /dev/null <<EOF
+<VirtualHost *:8083>
+    DocumentRoot /var/www/media
+    ServerName localhost
+    <Directory /var/www/media>
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>
+EOF
+
+# Create VirtualHost configuration for apps
+sudo tee /etc/httpd/conf.d/apps.conf > /dev/null <<EOF
+<VirtualHost *:8083>
+    DocumentRoot /var/www/apps
+    ServerName localhost
+    <Directory /var/www/apps>
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>
+EOF
+
+# Copy website backups from jump host
+scp user@jump_host:/home/thor/media/* /var/www/media/
+scp user@jump_host:/home/thor/apps/* /var/www/apps/
+
+# Restart Apache to apply changes
+sudo systemctl restart httpd
+
+# Verify website accessibility
+curl http://localhost:8083/media/
+curl http://localhost:8083/apps/
