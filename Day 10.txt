@@ -1,0 +1,20 @@
+# #Day10 - DevOps Learning Journey
+
+## ✅ What I Learned Today
+Automated a website backup process using a Bash script for the production support environment. Created a script named `ecommerce_backup.sh` on App Server 2 to compress and transfer the `/var/www/html/ecommerce` directory. The script first creates a zip archive named `xfusioncorp_ecommerce.zip` inside `/backup/`, then securely copies it to the Nautilus Backup Server under `/backup/` using passwordless SSH authentication.
+
+To enable passwordless transfer, generated SSH keys with `ssh-keygen` and copied the public key to the remote backup server using `ssh-copy-id`. This ensures the script can run unattended without prompting for a password.
+
+### 🧠 Key Takeaways
+- `zip -r /backup/xfusioncorp_ecommerce.zip /var/www/html/ecommerce` creates a recursive zip archive of the website directory.  
+- `scp /backup/xfusioncorp_ecommerce.zip clint@stbkp01:/backup` securely transfers the archive to the remote backup server.  
+- `ssh-keygen` and `ssh-copy-id` are essential for enabling passwordless SSH authentication between servers.  
+- Automating backups ensures reliability, consistency, and time efficiency in production environments.  
+- Even small scripts can make infrastructure operations faster and more secure — a core DevOps principle.  
+
+### 💻 Commands Used
+```bash
+ssh-keygen
+ssh-copy-id clint@stbkp01
+zip -r /backup/xfusioncorp_ecommerce.zip /var/www/html/ecommerce
+scp /backup/xfusioncorp_ecommerce.zip clint@stbkp01:/backup
